@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDS Security Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    {% include 'includes/_navbar.html' %}
+    
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Stats Cards -->
+            <div class="col-md-3">
+                <div class="card stat-card bg-danger text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Suspicious IPs</h5>
+                        <h2 class="card-text">{{ stats.suspicious_ips }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-warning text-dark mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Failed Attempts</h5>
+                        <h2 class="card-text">{{ stats.failed_attempts }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Attempts</h5>
+                        <h2 class="card-text">{{ stats.total_attempts }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-success text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Unique IPs</h5>
+                        <h2 class="card-text">{{ stats.unique_ips }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Suspicious vs Normal IPs</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="data:image/png;base64,{{ graphs.suspicious_chart }}" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Login Attempts Timeline</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="data:image/png;base64,{{ graphs.timeline_chart }}" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Charts Row -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Top Suspicious IPs</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="data:image/png;base64,{{ graphs.top_ips_chart }}" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Real-Time Alerts</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="alerts-container" class="alerts-container">
+                            <!-- Alerts will appear here via SocketIO -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
